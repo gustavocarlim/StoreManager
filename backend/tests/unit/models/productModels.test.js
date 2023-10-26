@@ -45,13 +45,4 @@ describe('Testes das funções em ProductService', function () {
     expect(result).to.have.property('codeStatus', 200);
     expect(result).to.have.property('data').to.be.an('object');
   });
-
-  // it('Ao buscar por id inexistente deve retornar um erro', async function () {
-  //   sinon.stub(connection, 'execute').resolves([[]]);
-
-  //   const id = 5; 
-  //   const result = await productsService.getProductById(id);
-  //   expect(result.codeStatus).to.be.equal(response.codeStatus);
-  //   expect(result.data).to.be.deep.equal(response.data);
-  // });
 });
