@@ -39,12 +39,12 @@ describe('Testes das funções em ProductService', function () {
     expect(result).to.have.property('data').to.be.an('array');
   });
 
-  //   it('Ao buscar por id deve retornar status 200 e dados do produto', async function () {
-  //     sinon.stub(connection, 'execute').resolves([AllSalesDb]);
+  it('Ao buscar por id deve retornar status 200 e dados do produto', async function () {
+    sinon.stub(connection, 'execute').resolves(AllSalesDb);
 
-//     const id = 1;
-//     const result = await salesService.getSaleById(id);
-//     expect(result).to.have.property('codeStatus', 200);
-//     expect(result).to.have.property('data').to.be.an('object');
-//   });
+    const id = 1;
+    const result = await salesService.getSaleById(id);
+    expect(result).to.have.property('codeStatus', 200);
+    expect(result).to.have.property('data').to.be.an('object');
+  });
 });

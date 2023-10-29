@@ -2,7 +2,7 @@ const connection = require('./connection');
 const {
   getFormattedColumnNames,
   getFormattedPlaceholders,
-} = require('../utils/generateFormattedQuery');
+} = require('../utils/formattedQuery');
 
 const findAll = async () => {
   const [products] = await connection.execute(
