@@ -4,6 +4,7 @@ const { expect } = chai;
 const sinon = require('sinon');
 const { productsService } = require('../../../src/services');
 const connection = require('../../../src/models/connection');
+const { productModel } = require('../../../src/models');
 
 const AllproductsDb = [
   {
@@ -44,5 +45,14 @@ describe('Testes das funções em ProductService', function () {
     const result = await productsService.getProductById(id);
     expect(result).to.have.property('codeStatus', 200);
     expect(result).to.have.property('data').to.be.an('object');
+  });
+  
+  it('Teste insertProduct', async function () {
+    sinon.stub(connection, 'execute').resolves([{ insertId: 4 }]);
+
+    const product = await productModel.insertProduct({ name: 'Mjolnir' });
+
+    expect(product).to.be.equal(4);
+    expect(connection.execute.calledOnce).to.be.equal(true);
   });
 });
