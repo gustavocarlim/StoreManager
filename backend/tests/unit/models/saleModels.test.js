@@ -4,6 +4,7 @@ const { expect } = chai;
 const sinon = require('sinon');
 const { salesService } = require('../../../src/services');
 const connection = require('../../../src/models/connection');
+const { salesModel } = require('../../../src/models');
 
 const AllSalesDb = [
   {
@@ -46,5 +47,13 @@ describe('Testes das funções em ProductService', function () {
     const result = await salesService.getSaleById(id);
     expect(result).to.have.property('codeStatus', 200);
     expect(result).to.have.property('data').to.be.an('object');
+  });
+
+  it('Ao adicionar o id e o quantify, deve retornar 4', async function () {
+    sinon.stub(connection, 'execute').resolves([{ insertId: 4 }]);
+
+    const sale = await salesModel.insertSale({ productId: 1, quantity: 2 });
+
+    expect(sale).to.be.equal(4);
   });
 });

@@ -13,7 +13,19 @@ const getSaleById = async (id) => {
   return { codeStatus: 200, data: sale }; 
 };
 
+const insertSale = async (sale) => {
+  const insertedSale = await salesModel.insertSale(sale);
+
+  const resultData = {
+    id: insertedSale,
+    itemsSold: sale,
+  };
+
+  return { codeStatus: 201, data: resultData };
+};
+
 module.exports = {
   getAllSales,
   getSaleById,
+  insertSale,
 };
