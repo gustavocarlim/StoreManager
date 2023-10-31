@@ -27,6 +27,8 @@ const AllproductsDb = [
 
 const serviceReturn = { codeStatus: 200, data: AllproductsDb };
 const serviceReturnId = { codeStatus: 200, data: returnPorId };
+const insertedProduct = { id: 4, name: 'productx' };
+const insertReturn = { codeStatus: 201, data: insertedProduct };
 
 describe('Testes das funções em productControler', function () { 
   it('Ao buscar todos os produtos deve retornar status 200 e os dados dos produtos', async function () {
@@ -46,5 +48,14 @@ describe('Testes das funções em productControler', function () {
     sinon.stub(productsService, 'getProductById').resolves(serviceReturnId);
     await productControler.getProductById(req, res);
     expect(res.status.calledWith(200)).to.be.equal(true);
+  });
+  it('insert test', async function () {
+    const res = {};
+    const req = { body: { name: 'produtox' } };
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon.stub(productsService, 'insertProduct').resolves(insertReturn);
+    await productControler.insertProduct(req, res);
+    expect(res.status.calledWith(201)).to.be.equal(true);
   });
 });
