@@ -30,8 +30,13 @@ const insertProduct = async (product) => {
   return insertId;
 };
 
+const deleteProductById = async (id) => {
+  await connection.execute('DELETE FROM products WHERE id = ?', [id]);
+};
+
 module.exports = {
   findAll,
   findById,
   insertProduct,
+  deleteProductById,
 };

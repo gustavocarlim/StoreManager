@@ -1,3 +1,4 @@
+const { validateInsertSale, validateProductId } = require('../middlewares/validateService');
 const { salesModel } = require('../models');
 
 const getAllSales = async () => {
@@ -14,6 +15,11 @@ const getSaleById = async (id) => {
 };
 
 const insertSale = async (sale) => {
+  const error = validateInsertSale(sale);
+  if (error) return error;
+  const error2 = await validateProductId(sale);
+  if (error2) return error2;
+
   const insertedSale = await salesModel.insertSale(sale);
 
   const resultData = {

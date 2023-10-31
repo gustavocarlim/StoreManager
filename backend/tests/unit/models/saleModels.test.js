@@ -56,4 +56,92 @@ describe('Testes das funções em ProductService', function () {
 
     expect(sale).to.be.equal(4);
   });
+  it('Testing allSales', async function () {
+    sinon.stub(salesModel, 'getAllSales').resolves(AllSalesDb);
+
+    const sales = await salesService.getAllSales();
+
+    expect(sales).to.have.property('codeStatus');
+    expect(sales).to.have.property('data');
+    expect(sales.codeStatus).to.be.equal(200);
+  });
+
+  it('Testing saleById', async function () {
+    sinon.stub(salesModel, 'getSaleById').resolves([AllSalesDb]);
+
+    const sale = await salesService.getSaleById(1);
+
+    expect(sale.codeStatus).to.be.equal(200);
+  });
+
+  // it('Testing insertSale', async function () {
+  //   sinon.stub(salesModel, 'insertSale').resolves(4);
+
+  //   const sale = await salesService.insertSale([
+  //     {
+  //       productId: 1,
+  //       quantity: 1,
+  //     },
+  //     {
+  //       productId: 2,
+  //       quantity: 5,
+  //     },
+  //   ]);
+
+  //   expect(sale.codeStatus).to.be.equal(201);
+  // });
+
+  it('Testing insertSale with invalid quantity', async function () {
+    sinon.stub(salesModel, 'insertSale').resolves(4);
+
+    const sale = await salesService.insertSale([
+      {
+        productId: 1,
+        quantity: -1,
+      },
+      {
+        productId: 2,
+        quantity: 5,
+      },
+    ]);
+
+    expect(sale.codeStatus).to.be.equal(422);
+  });
+
+  it('Testing insertSale with zero quantity', async function () {
+    sinon.stub(salesModel, 'insertSale').resolves(4);
+  
+    const sale = await salesService.insertSale([
+      {
+        productId: 1,
+        quantity: 0,
+      },
+    ]);
+  
+    expect(sale.codeStatus).to.be.equal(422);
+  });
+  it('Testing insertSale with negative quantity', async function () {
+    sinon.stub(salesModel, 'insertSale').resolves(4);
+  
+    const sale = await salesService.insertSale([
+      {
+        productId: 1,
+        quantity: -1,
+      },
+    ]);
+  
+    expect(sale.codeStatus).to.be.equal(422);
+  });
+  it('Teste de tratamento de exceção ao inserir venda com dados inválidos', async function () {
+    sinon.stub(salesModel, 'insertSale').rejects(new Error('Erro ao inserir venda'));
+  
+    const sale = await salesService.insertSale([
+      {
+        productId: 1,
+        quantity: -1, // Dados inválidos
+      },
+    ]);
+  
+    expect(sale.codeStatus).to.be.equal(422); // Verifique o status de erro interno do servidor
+  });
 });
